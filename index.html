@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하기 싫은 일 목록</title>
+    <link rel="stylesheet" href="styles/app.css">
+    <!-- FullCalendar -->
+    <script src='scripts/lib/index.global.min.js'></script>
+    <!-- D3.js and Rough.js for Dashboard Charts -->
+    <script src="scripts/lib/d3.v7.min.js"></script>
+    <script src="scripts/lib/rough.min.js"></script>
+</head>
+<body>
+<!-- 커스텀 타이틀바 -->
+<div class="title-bar">
+    <div class="title-bar-title">NotToDo</div>
+    <div class="title-bar-controls">
+        <button class="title-bar-button settings" onclick="openSettings()" title="설정">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="m12 1 1.86 2.85L17 2.78l-.65 3.12L19 7l-1.5 2.5 2.85 1.86-.86 2.93L18 15.75l-2.5 1.5.86 2.93-2.85-1.86L12 21l-1.86-2.85L7 19.22l.65-3.12L5 15l1.5-2.5L3.15 10.64l.86-2.93L6 6.25l2.5-1.5-.86-2.93L10.14 3.86z"></path>
+            </svg>
+        </button>
+        <button class="title-bar-button minimize" onclick="minimizeWindow()">
+            <svg viewBox="0 0 10 1">
+                <path d="M0 0h10v1H0z" fill="currentColor"/>
+            </svg>
+        </button>
+        <button class="title-bar-button close" onclick="closeWindow()">
+            <svg viewBox="0 0 10 10">
+                <path d="M0 0l10 10M10 0L0 10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 하기 싫은 일 화면 -->
+    <div class="hate-screen" id="hateScreen">
+        <div class="hate-header">
+            <h1>😫 하기 싫은 일 목록</h1>
+            <p>정말 하기 싫은 일들을 적어보세요...</p>
+            <p style="font-size: 17px; color: #999; margin-top: 8px;">💡 클릭해서 우선순위를 정해보세요!</p>
+        </div>
+
+        <div class="hate-card">
+            <div class="hate-input-group">
+                <input type="text" class="hate-input" id="hateInput" placeholder="하기 싫은 일을 입력하세요..." spellcheck="false" autocomplete="off">
+                <button class="hate-add-btn" onclick="addHate()">추가</button>
+            </div>
+
+            <ul class="hate-list" id="hateList"></ul>
+            <div class="empty-state" id="hateEmptyState">
+                <p>아직 하기 싫은 일이 없네요! 😊</p>
+            </div>
+
+            <div class="hate-footer" id="hateFooter" style="display: none;">
+                <span style="font-size: 17px; color: #999;">총 <span id="hateCount">0</span>개의 하기 싫은 일</span>
+                <button class="clear-all-btn" onclick="clearAllWithConfirm()">모두 삭제</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TODO 화면 -->
+    <div class="todo-screen hidden" id="todoScreen">
+        <div class="todo-header">
+            <h1>✅ TODO 리스트</h1>
+            <p>오늘 꼭 해야 할 일들입니다!</p>
+        </div>
+
+        <div class="todo-card">
+            <div class="date-selector">
+                <button class="date-btn" onclick="changeDate(-1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                </button>
+                <span class="current-date" id="currentDate">오늘</span>
+                <button class="date-btn" onclick="changeDate(1)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9,18 15,12 9,6"></polyline>
+                    </svg>
+                </button>
+                <button class="date-btn" onclick="showAllDates()" id="showAllBtn">전체</button>
+                <button class="date-btn calendar-btn" id="calendarBtn" title="캘린더 보기">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="todoListContainer"></div>
+            <div class="empty-state" id="todoEmptyState" style="display: none;">
+                <p>할 일이 없어요! 🎉</p>
+            </div>
+
+            <div class="todo-footer" id="todoFooter" style="display: none;">
+                <button class="dashboard-btn" id="dashboardBtn" onclick="openDashboard()" title="통계 대시보드">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    <span>통계</span>
+                </button>
+                <button class="clear-all-btn" onclick="clearAllWithConfirm()">모두 삭제</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 화면 전환 버튼 -->
+    <button class="switch-btn" id="switchBtn" onclick="switchScreen()">
+        리스트 보기
+    </button>
+</div>
+
+<!-- 캘린더 모달 -->
+<div id="calendar-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>📅 캘린더</h2>
+            <button id="close-calendar-btn" class="modal-close-btn">✕</button>
+        </div>
+        <div id="calendar"></div>
+    </div>
+</div>
+
+<!-- 대시보드 모달 -->
+<div id="dashboard-modal" class="modal-overlay" style="display: none;">
+    <div class="dashboard-content">
+        <div class="dashboard-header">
+            <h2>📊 나의 성취 일기</h2>
+            <button id="close-dashboard-btn" class="modal-close-btn">✕</button>
+        </div>
+        
+        <!-- 기간 선택 탭 -->
+        <div class="period-tabs">
+            <button class="period-tab active" data-period="weekly">주간</button>
+            <button class="period-tab" data-period="monthly">월간</button>
+        </div>
+        
+        <!-- 통계 컨테이너 -->
+        <div class="dashboard-body">
+            <!-- 주간 통계 -->
+            <div class="stats-container" id="weekly-stats">
+                <!-- 전체 통계 카드 -->
+                <div class="summary-cards">
+                    <div class="stat-card primary" id="total-todos">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <h3>전체 TODO</h3>
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">개</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card success" id="completed-todos">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>완료한 일</h3>
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">개</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card warning" id="pending-todos">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-info">
+                            <h3>남은 일</h3>
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">개</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card info" id="completion-rate">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <h3>달성률</h3>
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 요일별 차트 -->
+                <div class="chart-section">
+                    <h4>📈 이번 주 완료 추이</h4>
+                    <svg id="weekly-chart" width="100%" height="300"></svg>
+                </div>
+            </div>
+            
+            <!-- 월간 통계 -->
+            <div class="stats-container hidden" id="monthly-stats">
+                <!-- 이번 달 요약 카드 -->
+                <div class="summary-cards">
+                    <div class="stat-card primary">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <h3>이번 달 TODO</h3>
+                            <span class="stat-number" id="month-total">0</span>
+                            <span class="stat-label">개</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card success">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>완료한 일</h3>
+                            <span class="stat-number" id="month-completed">0</span>
+                            <span class="stat-label">개</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card warning">
+                        <div class="stat-icon">🗑️</div>
+                        <div class="stat-info">
+                            <h3>포기한 일</h3>
+                            <span class="stat-number" id="month-deleted">0</span>
+                            <span class="stat-label">개</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card info">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <h3>달성률</h3>
+                            <span class="stat-number" id="month-rate">0</span>
+                            <span class="stat-label">%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 월간 트렌드 차트 -->
+                <div class="chart-section">
+                    <h4>📈 이번 달 주차별 완료 추이</h4>
+                    <svg id="monthly-chart" width="100%" height="300"></svg>
+                </div>
+                
+                <!-- 우선순위 분석 -->
+                <div class="priority-section">
+                    <h4>🎯 우선순위 분석</h4>
+                    <div class="priority-bars">
+                        <div class="priority-bar">
+                            <span class="priority-label">높음(1-3)</span>
+                            <div class="bar-container">
+                                <div class="bar high" style="width: 0%">
+                                    <span class="bar-value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="priority-bar">
+                            <span class="priority-label">보통(4-6)</span>
+                            <div class="bar-container">
+                                <div class="bar medium" style="width: 0%">
+                                    <span class="bar-value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="priority-bar">
+                            <span class="priority-label">낮음(7-8)</span>
+                            <div class="bar-container">
+                                <div class="bar low" style="width: 0%">
+                                    <span class="bar-value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 설정 모달 -->
+<div id="settings-modal" class="modal-overlay" style="display: none;">
+    <div class="settings-content">
+        <div class="settings-header">
+            <h2>⚙️ 설정</h2>
+            <button id="close-settings-btn" class="modal-close-btn">✕</button>
+        </div>
+        
+        <div class="settings-body">
+            <!-- 불투명도 설정 -->
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="setting-icon">🔍</span>
+                    <div class="setting-info">
+                        <h3>창 투명도</h3>
+                        <p>앱 창의 투명도를 조절합니다</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <input type="range" id="opacity-slider" min="10" max="100" value="100" class="slider">
+                    <span id="opacity-value">100%</span>
+                </div>
+            </div>
+            
+            <!-- 항상 위에 설정 -->
+            <div class="setting-item">
+                <div class="setting-label">
+                    <span class="setting-icon">📌</span>
+                    <div class="setting-info">
+                        <h3>항상 위에 표시</h3>
+                        <p>다른 창 위에 항상 표시됩니다</p>
+                    </div>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="always-on-top-toggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>

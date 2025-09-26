@@ -1,0 +1,39 @@
+{
+  "name": "hate-to-todo",
+  "version": "1.0.0",
+  "description": "하기 싫은 일을 TODO 리스트로 바꿔주는 앱",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish=never",
+    "portable": "electron-builder --win portable"
+  },
+  "keywords": ["todo", "productivity", "electron"],
+  "author": "CRZYRCPC",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^32.2.5",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  },
+  "build": {
+    "appId": "com.HTD.hatetotodo",
+    "productName": "HateToDo",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "h2do.ico"
+    },
+    "portable": {
+      "artifactName": "HateToDo.exe"
+    }
+  }
+}

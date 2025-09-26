@@ -1,0 +1,3419 @@
+@font-face {
+    font-family: 'GmarketSans';
+    src: url('../fonts/GmarketSansTTFLight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GmarketSans';
+    src: url('../fonts/GmarketSansTTFMedium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GmarketSans';
+    src: url('../fonts/GmarketSansTTFBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+* {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'GmarketSans', sans-serif;
+}
+
+body {
+    background: #ffffff;
+    height: 100vh;
+    padding: 50px 20px 120px;
+    margin: 0;
+    overflow: hidden;
+    min-width: 250px;
+    color: #000000;
+}
+
+/* 커스텀 타이틀바 */
+.title-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-app-region: drag;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.title-bar-title {
+    color: #000000;
+    font-size: 18px;
+    margin-left: 12px;
+    font-weight: 500;
+}
+
+.title-bar-controls {
+    display: flex;
+    -webkit-app-region: no-drag;
+}
+
+.title-bar-button {
+    width: 46px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: #333333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.title-bar-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.title-bar-button.close:hover {
+    background: #e81123;
+}
+
+.title-bar-button svg {
+    width: 10px;
+    height: 10px;
+}
+
+.title-bar-button.settings svg {
+    width: 14px;
+    height: 14px;
+}
+
+.title-bar-button.settings {
+    background: linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 50%, #1a1a1a 100%);
+    border: 1px solid #555;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.title-bar-button.settings:hover {
+    background: linear-gradient(145deg, #4a4a4a 0%, #3a3a3a 50%, #2a2a2a 100%);
+    border-color: #666;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        0 0 8px rgba(144, 144, 144, 0.2);
+}
+
+.title-bar-button.settings:active {
+    background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.5),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    height: calc(100vh - 170px);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 하기 싫은 일 화면 스타일 */
+.hate-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.hate-screen.hidden {
+    display: none;
+}
+
+.hate-header {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 4px 16px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-out;
+    flex-shrink: 0;
+}
+
+.hate-header h1 {
+    color: #000000;
+    margin-bottom: 12px;
+    font-size: 29px;
+}
+
+.hate-header p {
+    color: #333333;
+    font-size: 19px;
+}
+
+.todo-header {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.hate-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 4px 16px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    animation: slideUp 0.5s ease-out;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 350px;
+    max-height: calc(100vh - 300px);
+}
+
+.hate-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.hate-input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 16px;
+    font-size: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    background: #ffffff;
+    color: #000000;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hate-input:focus {
+    outline: none;
+    border-color: rgba(220, 53, 69, 0.8);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.hate-input::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.hate-add-btn {
+    padding: 12px 20px;
+    background: #dc3545;
+    border: 1px solid #dc3545;
+    color: white;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 200;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: fit-content;
+    box-shadow: 0 4px 16px rgba(220, 53, 69, 0.2);
+}
+
+.hate-add-btn:hover {
+    background: #c82333;
+    border-color: #bd2130;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+}
+
+.hate-list {
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+    margin: 0;
+    padding-right: 5px;
+    min-height: 150px;
+    max-height: calc(100vh - 400px);
+}
+
+/* 스크롤바 스타일링 */
+.hate-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.hate-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+.hate-list::-webkit-scrollbar-thumb {
+    background: rgba(220, 53, 69, 0.5);
+    border-radius: 3px;
+}
+
+.hate-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 53, 69, 0.7);
+}
+
+.hate-item {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 3px solid rgba(220, 53, 69, 0.8);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    animation: slideIn 0.3s ease-out;
+    overflow: visible;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.hate-item:hover:not(.menu-open) {
+    transform: translateX(5px);
+    background: #f8f9fa;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-left-color: rgba(220, 53, 69, 1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hate-item.menu-open {
+    position: relative;
+    z-index: 100000;
+}
+
+.hate-item.has-memo {
+    border-left-color: rgba(23, 162, 184, 0.8);
+    background: #f0f8ff;
+    border-color: rgba(23, 162, 184, 0.3);
+}
+
+.hate-item.has-memo.prioritized {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(23, 162, 184, 0.3);
+    border-left-width: 4px;
+}
+
+.hate-item.prioritized {
+    background: #fff5f5;
+    border-left-width: 4px;
+    border-left-color: rgba(220, 53, 69, 1);
+}
+
+.hate-item-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    max-width: calc(100% - 50px);
+}
+
+.hate-text-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 100%;
+}
+
+.hate-text {
+    color: #000000;
+    line-height: 1.3;
+    font-size: 19px;
+    /* 화면 너비에 따른 동적 말줄임 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 80px);
+}
+
+.hate-dates {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    flex-shrink: 0;
+}
+
+.hate-date {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: normal;
+    padding: 2px 6px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    white-space: nowrap;
+}
+
+.due-date-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.due-date-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    min-width: 20px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.due-date-input {
+    font-size: 11px;
+    padding: 4px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    min-width: 80px;
+    height: 24px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.due-date-input:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.due-date-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* date input 내부 아이콘 스타일 개선 */
+.due-date-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+    width: 20px;
+    height: 20px;
+}
+
+.due-date-input::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    background-color: rgba(102, 126, 234, 0.15);
+    transform: scale(1.05);
+}
+
+/* 비어있는 date input에 시각적 힌트 제거 */
+
+.due-date-clear {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-left: -2px;
+}
+
+.due-date-clear:hover {
+    background: #e63946;
+    transform: scale(1.1);
+}
+
+.hate-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hate-edit {
+    background: none;
+    border: none;
+    color: #495057;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hate-edit:hover {
+    background: rgba(108, 117, 125, 0.1);
+    color: #212529;
+    transform: scale(1.1);
+}
+
+.hate-edit svg {
+    transition: all 0.3s ease;
+}
+
+.hate-memo {
+    background: none;
+    border: none;
+    color: #495057;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hate-memo:hover {
+    background: rgba(108, 117, 125, 0.1);
+    color: #212529;
+    transform: scale(1.1);
+}
+
+.hate-memo.has-memo {
+    color: #17a2b8;
+}
+
+.hate-memo.has-memo:hover {
+    color: #138496;
+}
+
+.hate-memo svg {
+    transition: all 0.3s ease;
+}
+
+.memo-textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+.memo-textarea::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+.memo-textarea::-webkit-scrollbar-thumb {
+    background: rgba(23, 162, 184, 0.6);
+    border-radius: 3px;
+}
+
+.memo-textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(23, 162, 184, 0.8);
+}
+
+/* 인라인 편집 스타일 */
+.hate-item.editing {
+    background: #f8f9fa;
+    border-left-color: #007bff;
+}
+
+.hate-edit-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 20px;
+    border: 2px solid #007bff;
+    border-radius: 6px;
+    background: white;
+    font-family: 'GmarketSans', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.hate-edit-input:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.hate-edit-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.hate-edit-save, .hate-edit-cancel {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hate-edit-save {
+    color: #28a745;
+}
+
+.hate-edit-save:hover {
+    background: rgba(40, 167, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.hate-edit-cancel {
+    color: #dc3545;
+}
+
+.hate-edit-cancel:hover {
+    background: rgba(220, 53, 69, 0.1);
+    transform: scale(1.1);
+}
+
+/* 메모 모달 스타일 */
+.memo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.memo-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    animation: popupIn 0.3s ease-out;
+}
+
+.memo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.memo-title {
+    color: #333;
+    font-size: 24px;
+    font-weight: 200;
+    margin: 0;
+}
+
+.memo-close {
+    background: none;
+    border: none;
+    color: #333333;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.memo-close:hover {
+    color: #000000;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.memo-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 21px;
+    font-family: 'GmarketSans', sans-serif;
+    resize: none;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.memo-textarea:focus {
+    outline: none;
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.1);
+}
+
+.memo-char-count {
+    text-align: right;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.memo-char-count.warning {
+    color: #dc3545;
+}
+
+.memo-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.memo-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 200;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'GmarketSans', sans-serif;
+}
+
+.memo-btn.cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.memo-btn.cancel:hover {
+    background: #5a6268;
+}
+
+.memo-btn.save {
+    background: #17a2b8;
+    color: white;
+}
+
+.memo-btn.save:hover {
+    background: #138496;
+}
+
+.memo-btn.delete {
+    background: #dc3545;
+    color: white;
+}
+
+.memo-btn.delete:hover {
+    background: #c82333;
+}
+
+/* 메모 표시 (작은 점) */
+.memo-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    background: #17a2b8;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* 메모 미리보기 툴팁 */
+.memo-preview {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 300px;
+    word-wrap: break-word;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.memo-preview.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.memo-preview::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+/* 새로운 메모 미리보기 팝업 */
+.memo-preview-popup {
+    position: fixed;
+    background: transparent;
+    color: white;
+    z-index: 1500;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+}
+
+.memo-preview-popup.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.memo-preview-content {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 20px 25px;
+    border-radius: 25px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    max-width: 400px;
+    min-width: 250px;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.memo-preview-header {
+    font-size: 20px;
+    font-weight: 200;
+    margin-bottom: 12px;
+    color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 8px;
+}
+
+.memo-preview-text {
+    font-size: 19px;
+    line-height: 1.5;
+    color: #ffffff;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+/* TODO 아이템에서 메모 표시 */
+.todo-memo-indicator {
+    background: #6c757d;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+.priority-badge {
+    background: #dc3545;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.hate-delete {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hate-delete:hover {
+    background: rgba(220, 53, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.hate-delete svg {
+    transition: all 0.3s ease;
+}
+
+.hate-delete:hover svg {
+    stroke: #c82333;
+}
+
+/* Hate options container and menu */
+.hate-options-container {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+
+.hate-item.menu-open .hate-options-container {
+    z-index: 100001;
+}
+
+.hate-options-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hate-options-btn:hover {
+    background: rgba(108, 117, 125, 0.1);
+    color: #495057;
+    transform: scale(1.1);
+}
+
+.hate-options-btn.has-memo {
+    color: #17a2b8;
+}
+
+.hate-options-btn.has-memo:hover {
+    color: #138496;
+}
+
+.hate-options-btn svg {
+    transition: all 0.3s ease;
+}
+
+.hate-options-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100002;
+    min-width: 140px;
+    overflow: hidden;
+}
+
+.hate-options-menu .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: #495057;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.hate-options-menu .menu-item:last-child {
+    border-bottom: none;
+}
+
+.hate-options-menu .menu-item:hover {
+    background: #f8f9fa;
+}
+
+.hate-options-menu .memo-item:hover {
+    background: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+}
+
+.hate-options-menu .edit-item:hover {
+    background: rgba(108, 117, 125, 0.1);
+    color: #495057;
+}
+
+.hate-options-menu .delete-item:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Hate select mode styles */
+.hate-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+}
+
+.hate-footer-normal,
+.hate-footer-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.hate-footer-buttons,
+.select-footer-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.select-mode-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.select-mode-btn:hover {
+    background: #0056b3;
+}
+
+.select-all-btn,
+.delete-selected-btn,
+.cancel-select-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.select-all-btn {
+    background: #28a745;
+    color: white;
+}
+
+.select-all-btn:hover {
+    background: #218838;
+}
+
+.delete-selected-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.delete-selected-btn:hover:not(:disabled) {
+    background: #c82333;
+}
+
+.delete-selected-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.cancel-select-btn {
+    background: #6c757d;
+    color: white;
+}
+
+.cancel-select-btn:hover {
+    background: #5a6268;
+}
+
+.selected-count {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.select-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #dc3545;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.select-checkbox svg {
+    display: none;
+}
+
+.select-checkbox.selected {
+    background: #dc3545;
+    border-color: #dc3545;
+}
+
+.select-checkbox.selected svg {
+    display: block;
+    color: white;
+}
+
+.hate-item.select-mode {
+    cursor: pointer;
+}
+
+.hate-item.select-mode:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+/* TODO 화면 스타일 */
+.todo-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-screen.hidden {
+    display: none;
+}
+
+.todo-header h1 {
+    color: #000000;
+    margin-bottom: 12px;
+    font-size: 29px;
+}
+
+.todo-header p {
+    color: #333333;
+    font-size: 19px;
+}
+
+.todo-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 4px 16px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+}
+
+#todoListContainer {
+    flex: 1;
+    overflow-y: auto;
+    margin: 0;
+    padding-right: 5px;
+    min-height: 200px;
+    max-height: calc(100vh - 400px);
+}
+
+/* TODO 리스트 스크롤바 스타일링 */
+#todoListContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+#todoListContainer::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+#todoListContainer::-webkit-scrollbar-thumb {
+    background: rgba(40, 167, 69, 0.5);
+    border-radius: 3px;
+}
+
+#todoListContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(40, 167, 69, 0.7);
+}
+
+.todo-item {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 3px solid rgba(40, 167, 69, 0.8);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item:hover {
+    transform: translateX(5px);
+    background: #f8f9fa;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-left-color: rgba(40, 167, 69, 1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.todo-item.completed {
+    opacity: 0.6;
+    background: #f0f0f0;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #28a745;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.checkbox.checked {
+    background: #28a745;
+}
+
+.checkbox.checked::after {
+    content: '✓';
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 19px;
+}
+
+.todo-text {
+    flex: 1;
+    font-size: 20px;
+    color: #000000;
+    text-shadow: none;
+    /* 화면 너비에 따른 동적 말줄임 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    max-width: calc(100% - 80px);
+}
+
+.todo-priority {
+    background: rgba(255, 193, 7, 0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: #000000;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.2);
+}
+
+.switch-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    padding: 12px 24px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: #333333;
+    border-radius: 16px;
+    font-size: 19px;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-align: center;
+    z-index: 1000;
+}
+
+.switch-btn:hover {
+    transform: translateY(-2px);
+    background: #f8f9fa;
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.transform-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 53px;
+    z-index: 1000;
+    animation: magicTransform 2s ease-out;
+}
+
+@keyframes magicTransform {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.todo-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #333333;
+    text-shadow: none;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear-all-btn {
+    background: rgba(108, 117, 125, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.clear-all-btn:hover {
+    background: rgba(108, 117, 125, 1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hate-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-shrink: 0;
+}
+
+.hate-footer span {
+    color: #333333;
+    text-shadow: none;
+}
+
+.todo-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    flex-shrink: 0;
+    gap: 12px;
+}
+
+.todo-footer .dashboard-btn {
+    flex: 1;
+    justify-content: center;
+}
+
+.todo-footer .clear-all-btn {
+    flex: 1;
+    margin-top: 0;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+/* 대시보드 버튼 스타일 */
+.dashboard-btn {
+    background: rgba(45, 45, 45, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    font-family: 'GmarketSans', sans-serif;
+    font-weight: 200;
+}
+
+.dashboard-btn:hover {
+    background: rgba(64, 64, 64, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-btn svg {
+    transition: all 0.3s ease;
+}
+
+.dashboard-btn:hover svg {
+    stroke: #f8f9fa;
+}
+
+/* 대시보드 모달 스타일 */
+.dashboard-content {
+    background: #ffffff;
+    border-radius: 24px;
+    width: 95%;
+    max-width: 900px;
+    max-height: 85vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.show .dashboard-content {
+    transform: scale(1) translateY(0);
+}
+
+.dashboard-header {
+    background: #f8f9fa;
+    color: #333333;
+    padding: 24px 60px 24px 32px;
+    border-radius: 24px 24px 0 0;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h2 {
+    font-size: 24px;
+    font-weight: 200;
+    margin: 0;
+    font-family: 'GmarketSans', sans-serif;
+}
+
+/* 기간 선택 탭 */
+.period-tabs {
+    display: flex;
+    background: #e9ecef;
+    margin: 0;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.period-tab {
+    flex: 1;
+    padding: 16px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'GmarketSans', sans-serif;
+    color: #666666;
+}
+
+.period-tab.active {
+    background: #007bff;
+    color: white;
+}
+
+.period-tab:hover:not(.active) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* 대시보드 바디 */
+.dashboard-body {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 24px;
+}
+
+.dashboard-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dashboard-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+.dashboard-body::-webkit-scrollbar-thumb {
+    background: rgba(64, 64, 64, 0.8);
+    border-radius: 3px;
+}
+
+.dashboard-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(64, 64, 64, 1);
+}
+
+/* 통계 컨테이너 */
+.stats-container {
+    display: block;
+}
+
+.stats-container.hidden {
+    display: none;
+}
+
+/* 통계 카드 - 모든 화면에서 바둑판 형식 */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+}
+
+.stat-card {
+    background: #ffffff;
+    color: #333333;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.primary {
+    border-color: #667eea;
+    background: #f8f9ff;
+}
+
+.stat-card.success {
+    border-color: #28a745;
+    background: #f8fff8;
+}
+
+.stat-card.warning {
+    border-color: #ffc107;
+    background: #fffef8;
+}
+
+.stat-card.info {
+    border-color: #17a2b8;
+    background: #f8fdff;
+}
+
+.stat-icon {
+    font-size: 18px;
+    width: 32px;
+    text-align: center;
+    line-height: 1;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-info h3 {
+    margin: 0 0 4px 0;
+    font-size: 10px;
+    color: #333333;
+    font-weight: 500;
+}
+
+.stat-number {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    line-height: 1;
+    margin-right: 3px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #333333;
+}
+
+/* 차트 섹션 */
+.chart-section {
+    padding: 0 16px 16px;
+}
+
+.chart-section h4 {
+    margin-bottom: 12px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#weekly-chart, #monthly-chart {
+    width: 100%;
+    height: 240px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 우선순위 분석 섹션 */
+.priority-section {
+    padding: 0 16px 12px;
+}
+
+.priority-section h4 {
+    margin-bottom: 12px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.priority-bars {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.priority-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.priority-label {
+    min-width: 90px;
+    font-size: 14px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.bar-container {
+    flex: 1;
+    height: 28px;
+    background: #f0f0f0;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    border-radius: 14px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.bar.high {
+    background: #dc3545;
+}
+
+.bar.medium {
+    background: #ffc107;
+}
+
+.bar.low {
+    background: #28a745;
+}
+
+.bar-value {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 인사이트 섹션 */
+.dashboard-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    gap: 6px;
+}
+
+/* ========== 반응형 디자인 (태블릿 및 모바일) ========== */
+@media (max-width: 768px) {
+    /* === 대시보드 관련 === */
+    .dashboard-content {
+        width: 98%;
+        max-height: 90vh;
+        border-radius: 16px;
+    }
+
+    .dashboard-header {
+        padding: 20px 24px;
+        border-radius: 16px 16px 0 0;
+    }
+
+    .dashboard-header h2 {
+        font-size: 20px;
+    }
+
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .stat-number {
+        font-size: 28px;
+    }
+
+    .chart-section, .priority-section {
+        padding: 0 16px 16px;
+    }
+
+    #weekly-chart, #monthly-chart {
+        height: 250px;
+        padding: 16px;
+    }
+
+    .period-tab {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    /* === 카드 레이아웃 관련 === */
+    /* 모바일에서 카드 간격 통일 */
+    .hate-card, .todo-card {
+        margin-bottom: 27px;
+    }
+
+    .todo-footer {
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .dashboard-btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .clear-all-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    /* 모바일에서 텍스트 너비 개선 */
+    .hate-text, .todo-text {
+        max-width: calc(100% - 60px);
+    }
+
+    /* === 설정 모달 반응형 === */
+    .settings-content {
+        width: 98%;
+        border-radius: 16px;
+    }
+
+    .settings-header {
+        padding: 20px 50px 20px 24px;
+        border-radius: 16px 16px 0 0;
+    }
+
+    .settings-header h2 {
+        font-size: 20px;
+    }
+
+    .settings-body {
+        padding: 24px;
+    }
+
+    .setting-item {
+        padding: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .setting-label {
+        justify-content: flex-start;
+    }
+
+    .setting-control {
+        justify-content: center;
+        align-self: center;
+    }
+
+    .slider {
+        width: 200px;
+    }
+
+    /* === 캘린더 모달 반응형 === */
+    .modal-content {
+        width: 98%;
+        max-height: 90vh;
+        border-radius: 16px;
+    }
+    
+    .modal-header {
+        padding: 20px 24px;
+    }
+    
+    .modal-header h2 {
+        font-size: 20px;
+    }
+    
+    #calendar {
+        padding: 20px;
+    }
+    
+    .fc .fc-toolbar-title {
+        font-size: 22px;
+    }
+    
+    .fc .fc-button-primary {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+.date-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.date-btn {
+    padding: 8px 12px;
+    background: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+}
+
+.date-btn.active {
+    background: #28a745;
+    color: white;
+}
+
+.date-btn svg {
+    transition: all 0.3s ease;
+}
+
+.date-btn:hover svg {
+    stroke: #333;
+}
+
+.date-btn.active svg {
+    stroke: white;
+}
+
+.current-date {
+    color: #333333;
+    text-shadow: none;
+    font-weight: 500;
+    flex: 1;
+    font-size: 18px;
+    text-align: center;
+}
+
+.date-group {
+    margin-bottom: 25px;
+}
+
+.date-header {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-size: 19px;
+    font-weight: 200;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date-count {
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-weight: normal;
+}
+
+.celebration {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px 30px;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1000;
+    animation: toastIn 0.4s ease-out;
+    min-width: 250px;
+    max-width: 350px;
+}
+
+.celebration h2 {
+    color: #28a745;
+    margin-bottom: 6px;
+    font-size: 22px;
+}
+
+.celebration p {
+    color: #666;
+    font-size: 16px;
+    margin: 6px 0;
+}
+
+.celebration .streak-number {
+    font-size: 32px;
+    font-weight: bold;
+    color: #dc3545;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin: 8px 0;
+}
+
+/* 단계별 축하 이펙트 */
+.celebration.level-1 { background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%); }
+.celebration.level-2 { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); }
+.celebration.level-3 { background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%); }
+.celebration.level-4 { background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%); }
+.celebration.level-5 { background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%); }
+.celebration.level-6 { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); }
+.celebration.level-7 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+.celebration.level-8 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.celebration.level-8 h2,
+.celebration.level-8 p {
+    color: white;
+}
+
+/* 파티클 이펙트 */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ffd700;
+    border-radius: 50%;
+    animation: particle-fall 6s ease-out forwards;
+}
+
+.particle.confetti {
+    width: 8px;
+    height: 8px;
+    animation: confetti-fall 8s ease-out forwards;
+}
+
+.particle.star {
+    background: #ff6b6b;
+    animation: star-twinkle 4s ease-out forwards;
+}
+
+@keyframes particle-fall {
+    0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-10px) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(1080deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes star-twinkle {
+    0%, 100% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+/* 레벨별 애니메이션 강화 */
+.celebration.level-4,
+.celebration.level-5,
+.celebration.level-6,
+.celebration.level-7,
+.celebration.level-8 {
+    animation: celebrate-enhanced 0.6s ease-out;
+}
+
+.celebration.level-7,
+.celebration.level-8 {
+    animation: celebrate-ultimate 0.8s ease-out;
+}
+
+@keyframes celebrate-enhanced {
+    0% {
+        transform: translateX(-50%) translateY(100px) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(-50%) translateY(0) scale(1.05);
+    }
+    100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes celebrate-ultimate {
+    0% {
+        transform: translateX(-50%) translateY(100px) scale(0.7);
+        opacity: 0;
+    }
+    30% {
+        transform: translateX(-50%) translateY(-10px) scale(1.1);
+    }
+    60% {
+        transform: translateX(-50%) translateY(5px) scale(0.95);
+    }
+    100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes toastIn {
+    0% {
+        transform: translateX(-50%) translateY(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 커스텀 팝업 스타일 */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.popup {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    animation: popupIn 0.3s ease-out;
+}
+
+.popup h3 {
+    color: #dc3545;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.popup p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.popup-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 200;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.popup-btn.cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.popup-btn.cancel:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.popup-btn.confirm {
+    background: #dc3545;
+    color: white;
+}
+
+.popup-btn.confirm:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+@keyframes popupIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ========== 극소형 모바일 디바이스 (350px 이하) ========== */
+@media (max-width: 350px) {
+    /* === 기본 레이아웃 === */
+    body {
+        padding: 50px 8px 62px;
+        background: #ffffff;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+        height: calc(100vh - 112px); /* 새로운 padding 값에 맞춘 높이 조정 */
+    }
+
+    /* 헤더 완전 숨김 */
+    .hate-header, .todo-header {
+        display: none;
+    }
+
+    /* 카드 최소화 */
+    .hate-card, .todo-card {
+        padding: 8px;
+        border-radius: 8px;
+        margin: 0;
+        margin-bottom: 12px; /* 간격 최적화 */
+    }
+
+    /* 통계 카드 최소화 - 바둑판 형식 유지 */
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+        padding: 6px;
+    }
+
+    .stat-card {
+        padding: 6px;
+        gap: 4px;
+        border-radius: 6px;
+    }
+
+    .stat-icon {
+        font-size: 14px;
+        width: 24px;
+    }
+
+    .stat-info h3 {
+        font-size: 8px;
+        margin: 0 0 2px 0;
+    }
+
+    .stat-number {
+        font-size: 14px;
+        margin-right: 1px;
+    }
+
+    .stat-label {
+        font-size: 9px;
+    }
+
+    .hate-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        flex-shrink: 0;
+        align-items: flex-end;
+    }
+
+    /* 하기 싫은 일 카운트 폰트 크기 줄이기 */
+    .hate-footer span {
+        font-size: 13px !important;
+    }
+
+    /* 대시보드 헤더 컴팩트화 */
+    .dashboard-header {
+        padding: 16px 50px 16px 20px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 18px;
+    }
+
+
+    /* 차트 섹션 제목 크기 조정 */
+    .chart-section h4 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    /* 우선순위 섹션 제목 크기 조정 */
+    .priority-section h4 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    /* 입력 영역 컴팩트화 */
+    .hate-input-group {
+        margin-bottom: 8px;
+        gap: 0;
+        flex-direction: row;
+    }
+
+    .hate-input {
+        flex: 1;
+        font-size: 14px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 2px solid #e0e0e0;
+    }
+
+    .hate-input::placeholder {
+        font-size: 12px;
+    }
+
+    /* 추가 버튼 숨김 (엔터로 추가) */
+    .hate-add-btn {
+        display: none;
+    }
+
+    /* 아이템 최소화 - 제목만 표시 */
+    .hate-item, .todo-item {
+        padding: 8px 10px;
+        margin-bottom: 4px;
+        border-radius: 4px;
+        font-size: 13px;
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .hate-content, .todo-content {
+        flex: 0 1 auto;
+        min-width: 0;
+    }
+
+    .hate-text, .todo-text {
+        font-size: 13px;
+        line-height: 1.2;
+        /* 텍스트 말줄임 - 화면 너비에 따라 동적 조정 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        min-width: 0;
+        max-width: calc(100% - 60px);
+    }
+
+    /* 부가 정보 숨김 */
+    .hate-dates, .due-date-container, .hate-date {
+        display: none;
+    }
+
+    /* 액션 버튼들 최소화 */
+    .hate-item-actions {
+        gap: 4px;
+        flex-shrink: 0;
+        display: flex;
+    }
+
+    .hate-options-btn {
+        padding: 4px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .hate-options-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .hate-options-menu {
+        min-width: 120px;
+        font-size: 11px;
+    }
+
+    .hate-options-menu .menu-item {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+
+    /* 우선순위 배지 최소화 */
+    .priority-badge {
+        width: 12px;
+        height: 12px;
+        font-size: 8px;
+        margin-right: 1px;
+        margin-left: 0;
+        flex-shrink: 0;
+        min-width: 12px;
+    }
+
+    /* 체크박스 최소화 */
+    .checkbox {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+
+    .select-checkbox {
+        width: 16px;
+        height: 16px;
+    }
+
+    .select-mode-btn,
+    .select-all-btn,
+    .delete-selected-btn,
+    .cancel-select-btn {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .hate-footer-buttons,
+    .select-footer-buttons {
+        gap: 4px;
+    }
+
+    .selected-count {
+        font-size: 12px;
+    }
+
+    .checkbox.checked::after {
+        font-size: 12px;
+    }
+
+    /* 전환 버튼을 카드 밖 하단에 배치 - 리스트 컨테이너와 동일한 너비 */
+    .switch-btn {
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 8px;
+        margin: 0;
+        z-index: 1001;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        width: calc(100% - 16px); /* 리스트 컨테이너와 동일한 너비 */
+        box-sizing: border-box;
+    }
+
+
+    /* 푸터 버튼들 숨김 */
+    .hate-footer, .todo-footer {
+        display: none;
+    }
+
+    /* 모두 삭제 버튼 최소화 (혹시 보이는 경우) */
+    .clear-all-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+        border-radius: 4px;
+    }
+
+    /* TODO 화면에서 버튼 크기 통일 */
+    .todo-footer .clear-all-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 8px;
+    }
+
+    .todo-footer .dashboard-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        gap: 6px;
+    }
+
+    /* TODO 화면에서만 날짜 선택기 노출 (하기싫은일 화면에서는 숨김) */
+    .hate-screen .date-selector {
+        display: none;
+    }
+
+    .todo-screen .date-selector {
+        display: flex;
+        margin-bottom: 8px;
+        padding: 6px;
+        background: #f8f9fa;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+    }
+
+    .todo-screen .date-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    /* 캘린더 버튼 숨김 */
+    .todo-screen .calendar-btn {
+        display: none;
+    }
+
+    .todo-screen .current-date {
+        font-size: 12px;
+    }
+
+    /* 스크롤바 더 얇게 */
+    .hate-list::-webkit-scrollbar,
+    #todoListContainer::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* 빈 상태 메시지 최소화 */
+    .empty-state {
+        padding: 20px 10px;
+        font-size: 12px;
+    }
+
+    /* 편집 입력창 최소화 */
+    .hate-edit-input {
+        font-size: 13px;
+        padding: 6px 8px;
+        border-radius: 4px;
+    }
+
+    /* 편집 모드 아이템 최소화 */
+    .hate-item.editing {
+        padding: 6px 8px;
+        min-height: 28px;
+    }
+
+    /* 편집 액션 버튼들 최소화 */
+    .hate-edit-actions {
+        gap: 2px;
+    }
+
+    .hate-edit-save, .hate-edit-cancel {
+        padding: 3px;
+        width: 18px;
+        height: 18px;
+    }
+
+    /* 메모 모달 최소화 */
+    .memo-content {
+        width: 98%;
+        padding: 15px;
+        max-width: 320px;
+        border-radius: 8px;
+    }
+
+    .memo-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .memo-textarea {
+        font-size: 13px;
+        height: 100px;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .memo-char-count {
+        font-size: 11px;
+        margin-bottom: 15px;
+    }
+
+    .memo-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+
+    .memo-buttons {
+        gap: 8px;
+    }
+
+    /* 메모 호버 프리뷰 최소화 */
+    .memo-preview-popup {
+        transform: translateX(-50%) translateY(-30px);
+    }
+
+    .memo-preview-content {
+        padding: 12px 15px;
+        border-radius: 15px;
+        max-width: 280px;
+        min-width: 200px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .memo-preview-header {
+        font-size: 14px;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+    }
+
+    .memo-preview-text {
+        font-size: 12px;
+        line-height: 1.3;
+    }
+
+    /* 타이틀바 최소화 */
+    .title-bar-title {
+        font-size: 14px;
+        margin-left: 8px;
+    }
+
+    .title-bar-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    /* 완료 시 토스트 UI 최소화 */
+    .celebration {
+        padding: 12px 16px;
+        border-radius: 15px;
+        min-width: 180px;
+        max-width: 280px;
+        bottom: 60px;
+    }
+
+    .celebration h2 {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
+    .celebration p {
+        font-size: 12px;
+        margin: 4px 0;
+    }
+
+    .celebration .streak-number {
+        font-size: 20px;
+        margin: 4px 0;
+    }
+
+    /* 설정 모달 추가 반응형 */
+    .settings-body {
+        padding: 16px;
+    }
+
+    .setting-item {
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+
+    .setting-icon {
+        font-size: 20px;
+        width: 32px;
+    }
+
+    .setting-info h3 {
+        font-size: 16px;
+    }
+
+    .setting-info p {
+        font-size: 12px;
+    }
+
+    .slider {
+        width: 150px;
+    }
+
+    .toggle-switch {
+        width: 50px;
+        height: 28px;
+        align-self: center;
+    }
+
+    .toggle-slider:before {
+        height: 22px;
+        width: 22px;
+        left: 3px;
+        bottom: 3px;
+    }
+
+    input:checked + .toggle-slider:before {
+        transform: translateX(22px);
+    }
+}
+
+/* ========== 소형 모바일 디바이스 (400px 이하) ========== */
+@media (max-width: 400px) {
+    /* === 기본 레이아웃 === */
+    body {
+        padding: 50px 10px 90px;
+    }
+
+    .hate-card {
+        min-height: 250px;
+        max-height: 100%;
+        height: 100%;
+    }
+
+    .hate-list {
+        max-height: calc(100vh - 270px);
+    }
+
+    #todoListContainer {
+        max-height: calc(100vh - 270px);
+    }
+
+    .hate-header h1, .todo-header h1 {
+        font-size: 24px;
+    }
+
+    .hate-header p, .todo-header p {
+        font-size: 16px;
+    }
+
+    .hate-input {
+        font-size: 16px;
+    }
+
+    .hate-add-btn {
+        font-size: 16px;
+    }
+
+    .date-selector {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .date-btn {
+        padding: 6px 10px;
+        font-size: 16px;
+    }
+
+    /* 400px 이하에서 텍스트 너비 개선 */
+    .hate-text, .todo-text {
+        max-width: 100%
+    }
+}
+
+/* 설정 모달 스타일 */
+.settings-content {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 95%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.modal-overlay.show .settings-content {
+    transform: scale(1) translateY(0);
+}
+
+.settings-header {
+    background: #f8f9fa;
+    color: #333333;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 60px 24px 32px;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+    position: relative;
+}
+
+.settings-header h2 {
+    font-size: 24px;
+    font-weight: 200;
+    margin: 0;
+    font-family: 'GmarketSans', sans-serif;
+}
+
+.settings-body {
+    padding: 32px;
+    flex: 1;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    margin-bottom: 16px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.setting-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.setting-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.setting-icon {
+    font-size: 24px;
+    width: 40px;
+    text-align: center;
+}
+
+.setting-info h3 {
+    color: #000000;
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'GmarketSans', sans-serif;
+}
+
+.setting-info p {
+    color: #333333;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.setting-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* 슬라이더 스타일 - 메탈 느낌 */
+.slider {
+    -webkit-appearance: none;
+    width: 120px;
+    height: 8px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    border: 1px solid #444;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.8),
+        0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #e8e8e8 0%, #c0c0c0 25%, #a8a8a8 50%, #909090 75%, #787878 100%);
+    border: 2px solid #555;
+    cursor: pointer;
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    background: linear-gradient(145deg, #f0f0f0 0%, #d0d0d0 25%, #b8b8b8 50%, #a0a0a0 75%, #888888 100%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.slider::-webkit-slider-thumb:active {
+    background: linear-gradient(145deg, #d8d8d8 0%, #b0b0b0 25%, #989898 50%, #808080 75%, #686868 100%);
+    box-shadow: 
+        0 1px 4px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(0, 0, 0, 0.4),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #e8e8e8 0%, #c0c0c0 25%, #a8a8a8 50%, #909090 75%, #787878 100%);
+    border: 2px solid #555;
+    cursor: pointer;
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+    background: linear-gradient(145deg, #f0f0f0 0%, #d0d0d0 25%, #b8b8b8 50%, #a0a0a0 75%, #888888 100%);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+}
+
+#opacity-value {
+    color: #333333;
+    font-weight: 500;
+    font-size: 16px;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* 토글 스위치 스타일 - 메탈 느낌 */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    border: 2px solid #444;
+    transition: 0.4s;
+    border-radius: 34px;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.6),
+        0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 2px;
+    background: linear-gradient(145deg, #f0f0f0 0%, #d0d0d0 25%, #b0b0b0 50%, #909090 75%, #707070 100%);
+    border: 1px solid #555;
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+}
+
+input:checked + .toggle-slider {
+    background: linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 50%, #2a2a2a 100%);
+    border-color: #666;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.8),
+        0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 8px rgba(144, 144, 144, 0.3);
+}
+
+input:focus + .toggle-slider {
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.6),
+        0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 2px rgba(144, 144, 144, 0.3);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+    background: linear-gradient(145deg, #ffffff 0%, #e0e0e0 25%, #c0c0c0 50%, #a0a0a0 75%, #808080 100%);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-slider:hover:before {
+    background: linear-gradient(145deg, #ffffff 0%, #e8e8e8 25%, #c8c8c8 50%, #a8a8a8 75%, #888888 100%);
+    box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+}
+
+
+/* 캘린더 모달 스타일 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #2d2d2d;
+    padding: 0;
+    border-radius: 24px;
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(64, 64, 64, 0.8);
+    width: 95%;
+    max-width: 900px;
+    height: 80vh;
+    min-height: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.95) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.show .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    background: #1a1a1a;
+    color: white;
+    padding: 24px 32px;
+    text-align: center;
+    position: relative;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 10;
+    margin: 0;
+    font-family: 'GmarketSans', sans-serif;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.1);
+    color: #666666;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 18px;
+}
+
+.modal-close-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+    color: #333333;
+    transform: translateY(-50%) scale(1.1);
+}
+
+#calendar {
+    padding: 32px;
+    flex-grow: 1;
+    overflow: auto;
+    min-height: 500px;
+    height: 70vh;
+    background: #ffffff;
+    color: #000000;
+}
+
+/* 스크롤바 스타일링 */
+#calendar::-webkit-scrollbar {
+    width: 6px;
+}
+
+#calendar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+#calendar::-webkit-scrollbar-thumb {
+    background: rgba(64, 64, 64, 0.8);
+    border-radius: 3px;
+}
+
+#calendar::-webkit-scrollbar-thumb:hover {
+    background: rgba(64, 64, 64, 1);
+}
+
+/* FullCalendar 모던 스타일링 */
+.fc {
+    font-family: 'GmarketSans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* FullCalendar 기본 테두리 제거 */
+.fc table, .fc th, .fc td {
+    border: none !important;
+}
+
+.fc-theme-standard .fc-scrollgrid-section table,
+.fc-theme-standard .fc-scrollgrid-section td,
+.fc-theme-standard .fc-scrollgrid-section th {
+    border: 1px solid #e0e0e0 !important;
+}
+
+/* FullCalendar 그리드 라인 커스텀 */
+.fc-theme-standard td {
+    border-right: 1px solid #e0e0e0 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.fc-theme-standard th {
+    border-right: 1px solid #e0e0e0 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+}
+
+/* FullCalendar 추가 요소들 */
+.fc-scroller, .fc-view-container, .fc-view {
+    background: transparent !important;
+}
+
+/* 스크롤바가 있을 경우 배경 통일 */
+.fc .fc-scroller {
+    background: #ffffff !important;
+}
+
+/* 월 헤더와 주간 헤더 배경 통일 */
+.fc .fc-col-header {
+    background: #f5f5f5 !important;
+}
+
+/* 날짜 셀 배경 재확인 */
+.fc .fc-daygrid-day {
+    background: #ffffff !important;
+    border: 1px solid #e0e0e0 !important;
+    transition: background-color 0.2s ease;
+}
+
+/* FullCalendar 모든 하얀 배경과 테두리 제거 */
+.fc *, .fc *:before, .fc *:after {
+    border-color: #404040 !important;
+}
+
+.fc .fc-scrollgrid-liquid {
+    background: #2d2d2d !important;
+}
+
+.fc .fc-daygrid-body {
+    background: #2d2d2d !important;
+}
+
+/* 추가 안전 장치 - 모든 흰색 배경 제거 */
+.fc [style*="background-color: white"],
+.fc [style*="background-color: #ffffff"],
+.fc [style*="background-color: #fff"] {
+    background-color: #2d2d2d !important;
+}
+
+.fc .fc-toolbar {
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000000;
+    font-family: 'GmarketSans', sans-serif;
+}
+
+.fc .fc-button-primary {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-family: 'GmarketSans', sans-serif;
+    font-weight: 200;
+    font-size: 14px;
+    color: #000000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.fc .fc-button-primary:hover {
+    background: #f0f0f0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.fc .fc-button-primary:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.fc .fc-button-primary:disabled {
+    opacity: 0.5;
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fc-theme-standard .fc-scrollgrid {
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+}
+
+.fc .fc-col-header-cell {
+    background: #f5f5f5;
+    border: none;
+    padding: 16px 8px;
+    font-weight: 200;
+    color: #000000;
+    font-size: 14px;
+}
+
+
+.fc .fc-daygrid-day:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.fc .fc-daygrid-day-number {
+    padding: 12px;
+    font-weight: 200;
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.fc .fc-day-today {
+    background-color: rgba(102, 126, 234, 0.1) !important;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+    background: #667eea;
+    color: white;
+    border-radius: 8px;
+    min-width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px;
+    padding: 4px 6px;
+    font-weight: 200;
+    white-space: nowrap;
+}
+
+.fc .fc-event {
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin: 2px;
+    font-size: 12px !important;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.fc .fc-event:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.fc .fc-event-title {
+    font-family: 'GmarketSans', sans-serif;
+}
+
+.completed-event {
+    background: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #ffffff !important;
+    opacity: 0.9;
+}
+
+.completed-event .fc-event-title {
+    text-decoration: line-through;
+}
+
+/* FullCalendar 토요일 옆 빈공간 문제 해결 */
+.fc .fc-scrollgrid-section table {
+    table-layout: fixed !important;
+    width: 100% !important;
+}
+
+
+.fc .fc-col-header-cell,
+.fc .fc-daygrid-day {
+    width: 14.2857% !important; /* 100% / 7일 = 14.2857% */
+    min-width: 0 !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+.fc .fc-scrollgrid {
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
+.fc .fc-scrollgrid-liquid {
+    width: 100% !important;
+}
+
+.fc .fc-scrollgrid-section {
+    width: 100% !important;
+}
+
+.todo-event {
+    background: #007bff !important;
+    border-color: #007bff !important;
+    color: #ffffff !important;
+}
+
+.due-event {
+    background: #ffc107 !important;
+    border-color: #ffc107 !important;
+    color: #000000 !important;
+}
+
+.overdue-event {
+    background: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #ffffff !important;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+
+/* ========== 높이 제한 디바이스 대응 ========== */
+@media (max-height: 600px) {
+    .hate-card {
+        min-height: 300px;
+        max-height: calc(100vh - 200px);
+    }
+
+    .hate-list {
+        max-height: calc(100vh - 300px);
+        min-height: 100px;
+    }
+
+    #todoListContainer {
+        max-height: 100%;
+        min-height: 100px;
+    }
+}
+
+@media (max-height: 500px) {
+    .hate-card {
+        min-height: 200px;
+        max-height: calc(100vh - 150px);
+    }
+
+    .hate-list {
+        max-height: calc(100vh - 250px);
+        min-height: 80px;
+    }
+
+    #todoListContainer {
+        max-height: calc(100vh - 250px);
+        min-height: 80px;
+    }
+}
